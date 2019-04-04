@@ -9,6 +9,8 @@ import scipy
 import tifffile
 from scipy.ndimage import gaussian_filter
 
+from PIL import Image
+
 # TODO: Make something that imports the data from individual tiffs
 # Make something that imports the timeline files from mat
 # Make something that computes the fourier and plots the retinoptic maps
@@ -168,3 +170,7 @@ def export_tiffs(data, outDir='', dims = {'x':2, 'y':1, 't':0} ):
         raise NotADirectoryError
     else:
         tifffile.imsave(outDir, np.transpose(data, [dims['t'], dims['y'], dims['x']]).astype('single') )
+
+def tiffloader(dir):
+    ''' Loads all tiff files in a given folder'''
+

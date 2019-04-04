@@ -12,6 +12,7 @@ import numpy as np
 import matplotlib as mpl
 from six import string_types, integer_types
 import numba
+from scipy.stats import pearsonr
 
 _ACCEPTED_ARRAY_DTYPES = (np.float, np.float32, np.float64,
                           np.int, np.int8, np.int16, np.uint8, np.uint16,
@@ -45,6 +46,13 @@ def numba_corr(data1, data2):
     cross_mean = cross_sum / M
 
     return (cross_mean - mean1 * mean2) / (std1 * std2)
+
+
+def nan_pearson(d1, d2):
+    ''' Correlation function that compute the correlation between two signals ignoring any nans'''
+    idx = ~(np.isnan(d1) + np.isnan(d2))
+    return pearsonr(d1[idx], d2[idx])[0]
+
 
 def palplot_legend(pal, titles, size=1):
     """Plot the values in a color palette as a horizontal array.
