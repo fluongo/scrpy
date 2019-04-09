@@ -250,3 +250,4 @@ def compute_field_sign(ph_az, ph_ev, pw_az, pw_ev, filt_size = 1, doPlot = True)
 
 
     return field_sign
+
