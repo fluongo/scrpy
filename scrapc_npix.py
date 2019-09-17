@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
-
-
-
 #------------------------------------------------------------------------------
-# Imports """Cross-correlograms."""
-# THIS CODE IS FROM CORTEX-LAB GITHUB, USED FOR PHYS VISUALIZER
+# THIS CODE IS ADAPTED FROM CORTEX-LAB GITHUB, USED FOR PHYS VISUALIZER
 #------------------------------------------------------------------------------
 
 import matplotlib.pyplot as plt

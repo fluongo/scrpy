@@ -31,6 +31,28 @@ def compute_coef_var(image, x_start, x_end, y_start, y_end):
 
     return coef_var
 
+def remove_movement_artifact_from_raw_and_condition(data):
+    ''' fUS helper function used to threshold out and interpolate the raw data to remove movement artifacts'''
+    # Removes the movement artifact from the data that comes in the form of nT, nX, nY
+    sub_data = data[:, :4, :].mean(axis = -1).mean(axis=-1)
+    # Exclude all Values greater than 3sd over the median
+    pseudo_z = (sub_data - np.median(sub_data))/np.median(sub_data)
+    idx_remove = np.argwhere(pseudo_z>2)
+    n_timepoints = data.shape[0]
+    # Just do a linear interpolation beyween the last two valid points
+    data_fix = np.copy(data)
+    for xx in idx_remove:
+        if xx == 0 or xx == n_timepoints:
+            data_fix[xx, :, :] = np.median(data_fix, axis = 0)
+        try:
+            prev_i = np.max(np.setdiff1d(np.arange(xx),idx_remove)) # Largest value less than the current number but not in list
+            post_i = np.min(np.setdiff1d(np.arange(xx+1, n_timepoints),idx_remove)) # Minimum value less than the current number but not in list
+            data_fix[xx, :, :] = ( data_fix[prev_i, :, :] + data_fix[post_i, :, :] )/ 2.
+        except: # ANything goes wrong and just set to median
+            data_fix[xx, :, :] = np.median(data_fix, axis = 0)
+    
+    return data_fix
+
 
 def calculate_all_Mi(window_flat, factor_A, window):
     """

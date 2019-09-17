@@ -21,7 +21,7 @@ from bokeh.plotting import figure, show, output_file
 
 
 def plot_image_with_alpha(im, mask, thresh = 0.4, vmin = -np.pi, vmax = np.pi):
-    '''Plots an image with alpha values'''
+    '''Plots an image with alpha values since it is so annoying to get single pixel alpha in matplotlib'''
 
     # Make the RGBA array
     cmap = plt.cm.gist_rainbow

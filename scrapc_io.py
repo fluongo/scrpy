@@ -171,6 +171,17 @@ def export_tiffs(data, outDir='', dims = {'x':2, 'y':1, 't':0} ):
     else:
         tifffile.imsave(outDir, np.transpose(data, [dims['t'], dims['y'], dims['x']]).astype('single') )
 
-def tiffloader(dir):
-    ''' Loads all tiff files in a given folder'''
-
+def load_multitiff(fn, first_n = None):
+    ''' Takes input a filename and returns the multipaghe tiff'''
+    img = Image.open(fn)
+    w,h = img.size
+    if first_n == None:
+        n = img.n_frames
+    else:
+        n = first_n-1;
+    tiffarray = np.zeros((h,w,n))
+    for i in range(n):
+        img.seek(i)
+        tiffarray[:,:,i] = np.array(img)
+        data = tiffarray.astype(np.double);
+    return(data)
