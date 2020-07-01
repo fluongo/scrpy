@@ -31,13 +31,13 @@ def compute_coef_var(image, x_start, x_end, y_start, y_end):
 
     return coef_var
 
-def remove_movement_artifact_from_raw_and_condition(data):
+def remove_movement_artifact_from_raw_and_condition(data, thresh =1.8):
     ''' fUS helper function used to threshold out and interpolate the raw data to remove movement artifacts'''
     # Removes the movement artifact from the data that comes in the form of nT, nX, nY
     sub_data = data[:, :4, :].mean(axis = -1).mean(axis=-1)
     # Exclude all Values greater than 3sd over the median
     pseudo_z = (sub_data - np.median(sub_data))/np.median(sub_data)
-    idx_remove = np.argwhere(pseudo_z>2)
+    idx_remove = np.argwhere(pseudo_z>thresh)
     n_timepoints = data.shape[0]
     # Just do a linear interpolation beyween the last two valid points
     data_fix = np.copy(data)
