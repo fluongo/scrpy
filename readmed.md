@@ -1,12 +1,17 @@
+## Useful code for use in various analyses
+
 Toolbox stands for 
 
-Stop Constantly Re-implementing All Python Code
+SCRPY: Stop Constantly Re-implementing all PYthon code
 
-SCRAPC
 
 Modules
 
-io
-viz
 analysis
+behavior
+imfilters
+io
+neuralnets
+npix
+viz
 
